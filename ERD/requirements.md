@@ -87,6 +87,6 @@
      - `recipient_id` in Message references `user_id` in User
 
 ## ER Diagram
-![Airbnb ER Diagram](ERD/erd.png)
+![Airbnb ER Diagram](erd.png)
 
 *Diagram created using MySQL Workbench, showing all entities, attributes, and relationships with proper cardinality notation.*
