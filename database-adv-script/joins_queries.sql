@@ -18,7 +18,6 @@ INNER JOIN
 
 -- Query 2: LEFT JOIN to retrieve all properties and their reviews, including properties that have no reviews
 -- This query includes all properties, even those without reviews (where review fields will be NULL)
--- Adds a check to ensure non-NULL ratings are between 1 and 5
 SELECT 
     p.property_id,
     p.name AS property_name,
@@ -35,9 +34,7 @@ SELECT
 FROM 
     Property p
 LEFT JOIN 
-    Review r ON p.property_id = r.property_id
-WHERE 
-    r.rating IS NULL OR r.rating BETWEEN 1 AND 5;
+    Review r ON p.property_id = r.property_id;
 
 -- Query 3: FULL OUTER JOIN to retrieve all users and all bookings, even if a user has no booking or a booking is not linked to a user
 -- This query includes all users and bookings, showing NULLs where there’s no match
