@@ -1,14 +1,14 @@
-# Database Index Optimization Report
+# Database Index Performance Analysis
 
-## Index Implementation
-Created indexes on frequently queried columns in:
-- **User table**: `user_id`, `email`, `created_at`
-- **Booking table**: `user_id`, `property_id`, date ranges, `status`
-- **Property table**: `property_id`, `host_id`, `location`, `pricepernight`
+## Indexes Created
+The following indexes were implemented in `database_index.sql`:
+- User table: `user_id`, `email`, `created_at`
+- Booking table: `user_id`, `property_id`, `(start_date, end_date)`, `status`
+- Property table: `property_id`, `host_id`, `location`, `pricepernight`
 
-## Performance Tests
+## Performance Comparison
 
-### Query 1: Find user bookings
+### Test Query 1: User Bookings Lookup
 ```sql
 EXPLAIN ANALYZE
-SELECT * FROM Booking WHERE user_id = 123;
+SELECT * FROM Booking WHERE user_id = 215;
