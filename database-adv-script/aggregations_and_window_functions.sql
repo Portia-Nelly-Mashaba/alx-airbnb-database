@@ -1,4 +1,4 @@
--- Aggregation: Count bookings per user
+-- Query 1: Bookings count per user (GROUP BY aggregation)
 SELECT 
     u.user_id,
     u.first_name,
@@ -14,7 +14,7 @@ GROUP BY
 ORDER BY 
     total_bookings DESC;
 
--- Window function: Rank properties by booking count
+-- Query 2: Property ranking by bookings (Window function)
 SELECT 
     p.property_id,
     p.name,
