@@ -1,4 +1,4 @@
--- INNER JOIN: Retrieve all bookings with user details
+-- INNER JOIN: Retrieve all bookings with user details (MISSING IN YOUR COMMIT)
 SELECT 
     b.booking_id, 
     b.start_date, 
@@ -15,7 +15,7 @@ FROM
 INNER JOIN 
     User u ON b.user_id = u.user_id;
 
--- LEFT JOIN: Retrieve all properties with their reviews (including properties without reviews)
+-- LEFT JOIN: Retrieve all properties with their reviews (ALREADY EXISTS IN YOUR COMMIT)
 SELECT 
     p.property_id, 
     p.name, 
@@ -29,7 +29,7 @@ FROM
 LEFT JOIN 
     Review r ON p.property_id = r.property_id;
 
--- FULL OUTER JOIN simulation: Retrieve all users and all bookings
+-- FULL OUTER JOIN simulation: Retrieve all users and all bookings (MISSING IN YOUR COMMIT)
 SELECT 
     u.user_id,
     u.first_name,
