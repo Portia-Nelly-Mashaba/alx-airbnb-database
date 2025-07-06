@@ -1,57 +1,43 @@
 # Database Advanced Script - SQL Queries
 
 ## Overview
-This directory contains SQL queries demonstrating different types of joins and subqueries for an Airbnb-like database. The queries work with a database schema that includes tables for `User`, `Booking`, `Property`, and `Review`.
+This directory contains SQL queries demonstrating joins, subqueries, aggregations, and window functions for an Airbnb-like database.
 
 ## Files
-- `joins_queries.sql`: Contains join queries (INNER, LEFT, and FULL OUTER JOIN simulation)
-- `subqueries.sql`: Contains correlated and non-correlated subqueries
+- `joins_queries.sql`: Join operations (INNER, LEFT, FULL OUTER simulation)
+- `subqueries.sql`: Correlated and non-correlated subqueries
+- `aggregations_and_window_functions.sql`: Aggregations and window functions
 - `README.md`: This documentation file
 
-## Joins Queries
+## Aggregations and Window Functions
 
-### INNER JOIN Query
-Retrieves all bookings along with user details:
-- **Tables**: `Booking` and `User`
-- **Join Condition**: `user_id`
-- **Output**: 
-  - Booking details: `booking_id`, `start_date`, `end_date`, `total_price`, `status`, `property_id`
-  - User details: `user_id`, `first_name`, `last_name`, `email`
+### Bookings Count per User
+**Objective**: Calculate total bookings made by each user.
 
-### LEFT JOIN Query 
-Retrieves all properties with their reviews (including properties without reviews):
-- **Tables**: `Property` and `Review`
-- **Join Condition**: `property_id`
-- **Output**:
-  - Property details: `property_id`, `name`, `location`, `pricepernight`
-  - Review details: `review_id`, `rating`, `comment` (NULL if no reviews)
+**Implementation**:
+- Uses `COUNT()` aggregation with `GROUP BY`
+- Includes `LEFT JOIN` to include users with no bookings
+- Orders by booking count (descending)
 
-### FULL OUTER JOIN Simulation
-Retrieves all users and all bookings (including unmatched records):
-- **Implementation**: `LEFT JOIN` + `RIGHT JOIN` with `UNION`
-- **Tables**: `User` and `Booking`
-- **Join Condition**: `user_id`
+**Output**:
+- User details: `user_id`, `first_name`, `last_name`, `email`
+- `total_bookings`: Count of bookings per user
 
-## Subqueries
+### Property Ranking by Bookings
+**Objective**: Rank properties based on booking popularity.
 
-### Non-correlated Subquery
-Finds properties with average rating > 4.0:
-- **Inner Query**: Calculates average rating per property
-- **Outer Query**: Joins with Property table
-- **Output**: `property_id`, `name`, `location`, `pricepernight`, `average_rating`
+**Implementation**:
+- Uses `RANK()` window function
+- `COUNT()` aggregation with `GROUP BY`
+- `LEFT JOIN` to include properties with no bookings
+- Orders by rank (most booked first)
 
-### Correlated Subquery
-Finds users with more than 3 bookings:
-- **Outer Query**: Selects from User table
-- **Inner Query**: Counts bookings per user
-- **Output**: `user_id`, `first_name`, `last_name`, `email`
+**Output**:
+- Property details: `property_id`, `name`, `location`, `pricepernight`
+- `total_bookings`: Count of bookings per property
+- `booking_rank`: Ranking position
 
 ## Usage
-1. Ensure your database contains the required tables.
-2. Run the queries using MySQL client:
-   ```bash
-   # For joins
-   mysql -u your_username -p your_database_name < joins_queries.sql
-   
-   # For subqueries
-   mysql -u your_username -p your_database_name < subqueries.sql
+```bash
+# Run aggregations and window functions
+mysql -u your_username -p your_database_name < aggregations_and_window_functions.sql
