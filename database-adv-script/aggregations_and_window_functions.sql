@@ -14,19 +14,22 @@ GROUP BY
 ORDER BY 
     total_bookings DESC;
 
--- Query 2: Property ranking by bookings (Window function)
+-- Subquery aggregates total bookings per property
 SELECT 
-    p.property_id,
-    p.name,
-    p.location,
-    p.pricepernight,
-    COUNT(b.booking_id) AS total_bookings,
-    RANK() OVER (ORDER BY COUNT(b.booking_id) DESC) AS booking_rank
-FROM 
-    Property p
-LEFT JOIN 
-    Booking b ON p.property_id = b.property_id
-GROUP BY 
-    p.property_id, p.name, p.location, p.pricepernight
-ORDER BY 
-    booking_rank;
+    property_id,
+    name,
+    location,
+    pricepernight,
+    total_bookings,
+    RANK() OVER (ORDER BY total_bookings DESC) AS booking_rank
+FROM (
+    SELECT 
+        p.property_id,
+        p.name,
+        p.location,
+        p.pricepernight,
+        COUNT(b.booking_id) AS total_bookings
+    FROM Property p
+    LEFT JOIN Booking b ON p.property_id = b.property_id
+    GROUP BY p.property_id, p.name, p.location, p.pricepernight
+) AS property_bookings;
