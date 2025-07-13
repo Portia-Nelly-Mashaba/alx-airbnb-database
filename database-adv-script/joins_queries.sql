@@ -14,23 +14,21 @@ FROM Booking
 INNER JOIN User ON Booking.user_id = User.user_id;
 
 
--- LEFT JOIN: Retrieve all properties with their reviews (including properties with no reviews)
+-- LEFT JOIN: Retrieve all properties and their reviews (including those with no reviews)
 SELECT 
-    Property.property_id,
-    Property.name AS property_name,
-    Property.description,
-    Property.location,
-    Property.pricepernight,
-    Review.review_id,
-    Review.rating,
-    Review.comment,
-    Review.created_at AS review_date,
-    User.user_id AS reviewer_id,
-    User.first_name AS reviewer_first_name,
-    User.last_name AS reviewer_last_name
-FROM Property
-LEFT JOIN Review ON Property.property_id = Review.property_id
-LEFT JOIN User ON Review.user_id = User.user_id;
+    p.property_id,
+    p.name AS property_name,
+    p.description,
+    p.location,
+    p.pricepernight,
+    r.review_id,
+    r.rating,
+    r.comment,
+    r.created_at AS review_created_at
+FROM Property p
+LEFT JOIN Review r ON p.property_id = r.property_id
+ORDER BY p.property_id;
+
 
 
 -- FULL OUTER JOIN simulation: Retrieve all users and all bookings (MISSING IN YOUR COMMIT)
