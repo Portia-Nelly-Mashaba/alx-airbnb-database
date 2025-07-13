@@ -16,12 +16,12 @@ ORDER BY
 
 -- Subquery aggregates total bookings per property
 SELECT 
-    property_id,
-    name,
-    location,
-    pricepernight,
-    total_bookings,
-    RANK() OVER (ORDER BY total_bookings DESC) AS booking_rank
+    pb.property_id,
+    pb.name,
+    pb.location,
+    pb.pricepernight,
+    pb.total_bookings,
+    RANK() OVER (ORDER BY pb.total_bookings DESC) AS booking_rank
 FROM (
     SELECT 
         p.property_id,
@@ -32,4 +32,5 @@ FROM (
     FROM Property p
     LEFT JOIN Booking b ON p.property_id = b.property_id
     GROUP BY p.property_id, p.name, p.location, p.pricepernight
-) AS property_bookings;
+) AS pb
+ORDER BY booking_rank;
