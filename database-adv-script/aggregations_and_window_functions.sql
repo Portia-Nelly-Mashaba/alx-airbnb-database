@@ -1,4 +1,4 @@
--- Query 1: Bookings count per user (GROUP BY aggregation)
+-- Step 1: Bookings count per user
 SELECT 
     u.user_id,
     u.first_name,
@@ -14,23 +14,21 @@ GROUP BY
 ORDER BY 
     total_bookings DESC;
 
--- Subquery aggregates total bookings per property
--- Step 1: Aggregate booking counts per property
-WITH PropertyBookingCounts AS (
+-- Step 2: Rank properties using total bookings
+WITH booking_counts AS (
     SELECT 
         property_id,
-        COUNT(*) AS total_bookings
+        COUNT(booking_id) AS total_bookings
     FROM Booking
     GROUP BY property_id
 )
 
--- Step 2: Rank properties using RANK over aggregated results
 SELECT 
-    p.property_id,
-    p.name,
-    p.location,
-    p.pricepernight,
-    COALESCE(pbc.total_bookings, 0) AS total_bookings,
-    RANK() OVER (ORDER BY COALESCE(pbc.total_bookings, 0) DESC) AS booking_rank
-FROM Property p
-LEFT JOIN PropertyBookingCounts pbc ON p.property_id = pbc.property_id;
+    Property.property_id,
+    Property.name,
+    Property.location,
+    Property.pricepernight,
+    COALESCE(booking_counts.total_bookings, 0) AS total_bookings,
+    RANK() OVER (ORDER BY COALESCE(booking_counts.total_bookings, 0) DESC) AS booking_rank
+FROM Property
+LEFT JOIN booking_counts ON Property.property_id = booking_counts.property_id;
