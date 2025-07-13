@@ -37,7 +37,7 @@ CREATE INDEX idx_property_price ON Property(pricepernight);
 
 ---
 
-## 🚀 Performance Comparison
+## 🚀 Measure the query performance before and after adding indexes using EXPLAIN or ANALYZE.
 
 ### 🔍 Test Query: Booking Lookup by User
 ```sql
