@@ -16,15 +16,15 @@ INNER JOIN User ON Booking.user_id = User.user_id;
 
 -- LEFT JOIN: Retrieve all properties with their reviews (ALREADY EXISTS IN YOUR COMMIT)
 SELECT 
-    Property.property_id,
-    Property.name AS property_name,
-    Property.description,
-    Review.review_id,
-    Review.rating,
-    Review.comment,
-    Review.created_at
-FROM Property
-LEFT JOIN Review ON Property.property_id = Review.property_id;
+    p.property_id,
+    p.name AS property_name,
+    p.description,
+    r.review_id,
+    r.rating,
+    r.comment,
+    r.created_at
+FROM Property p
+LEFT JOIN Review r ON p.property_id = r.property_id;
 
 
 -- FULL OUTER JOIN simulation: Retrieve all users and all bookings (MISSING IN YOUR COMMIT)
