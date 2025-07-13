@@ -1,15 +1,45 @@
-# Query Optimization Report
+Absolutely, Nelisiwe! Here’s your refreshed and fully GitHub-friendly `README.md`, now including the latest query optimizations from your `performance.sql` file:
 
-## Performance Analysis
+---
 
-### Original Query Issues:
-1. **Full table scans** on all joined tables
-2. **No date filtering** - processing all historical data
-3. **No result limiting** - retrieving unnecessary records
-4. **Inefficient payment join** - joining all payment records
+```markdown
+# 🚀 Query Optimization & Indexing Report
 
-### Optimization Techniques Applied:
+## 🧠 Objective
+Boost SQL query performance by:
+- Creating indexes for high-usage columns.
+- Refactoring expensive joins and large result sets.
+- Analyzing query behavior using `EXPLAIN ANALYZE`.
+- Applying filters and limits to reduce execution time.
 
-1. **Time-based Filtering**:
-   ```sql
-   WHERE b.start_date > DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)
+---
+
+## 📁 Files Submitted
+
+- `database_index.sql` → Contains all `CREATE INDEX` commands.
+- `index_performance.md` → Benchmarks before and after indexing.
+- `performance.sql` → Query analysis and optimized versions.
+
+---
+
+## 🗂️ Indexes Created
+
+### ✅ User Table
+```sql
+CREATE INDEX idx_user_user_id ON User(user_id);
+CREATE INDEX idx_user_email ON User(email);
+CREATE INDEX idx_user_created_at ON User(created_at);
+```
+
+### ✅ Booking Table
+```sql
+CREATE INDEX idx_booking_user_id ON Booking(user_id);
+CREATE INDEX idx_booking_property_id ON Booking(property_id);
+CREATE INDEX idx_booking_dates ON Booking(start_date, end_date);
+CREATE INDEX idx_booking_status ON Booking(status);
+```
+
+### ✅ Property Table
+```sql
+CREATE INDEX idx_property_property_id ON Property(property_id);
+CREATE
