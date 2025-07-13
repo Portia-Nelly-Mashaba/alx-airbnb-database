@@ -1,65 +1,54 @@
 -- INNER JOIN: Retrieve all bookings with user details (MISSING IN YOUR COMMIT)
-SELECT 
-    b.booking_id, 
-    b.start_date, 
-    b.end_date, 
-    b.total_price, 
-    b.status, 
-    b.property_id,
-    u.user_id,
-    u.first_name, 
-    u.last_name, 
-    u.email
-FROM 
-    Booking b
-INNER JOIN 
-    User u ON b.user_id = u.user_id;
+    SELECT 
+    Booking.booking_id,
+    Booking.property_id,
+    Booking.start_date,
+    Booking.end_date,
+    Booking.total_price,
+    Booking.status,
+    User.user_id,
+    User.first_name,
+    User.last_name,
+    User.email
+FROM Booking
+INNER JOIN User ON Booking.user_id = User.user_id;
+
 
 -- LEFT JOIN: Retrieve all properties with their reviews (ALREADY EXISTS IN YOUR COMMIT)
 SELECT 
-    p.property_id, 
-    p.name, 
-    p.location, 
-    p.pricepernight,
-    r.review_id, 
-    r.rating, 
-    r.comment
-FROM 
-    Property p
-LEFT JOIN 
-    Review r ON p.property_id = r.property_id;
+    Property.property_id,
+    Property.name AS property_name,
+    Property.description,
+    Review.review_id,
+    Review.rating,
+    Review.comment,
+    Review.created_at
+FROM Property
+LEFT JOIN Review ON Property.property_id = Review.property_id;
+
 
 -- FULL OUTER JOIN simulation: Retrieve all users and all bookings (MISSING IN YOUR COMMIT)
+-- Simulate FULL OUTER JOIN using UNION
 SELECT 
-    u.user_id,
-    u.first_name,
-    u.last_name,
-    u.email,
-    b.booking_id,
-    b.start_date,
-    b.end_date,
-    b.total_price,
-    b.status
-FROM 
-    User u
-LEFT JOIN 
-    Booking b ON u.user_id = b.user_id
+    User.user_id,
+    User.first_name,
+    User.last_name,
+    Booking.booking_id,
+    Booking.property_id,
+    Booking.start_date,
+    Booking.end_date
+FROM User
+LEFT JOIN Booking ON User.user_id = Booking.user_id
 
 UNION
 
 SELECT 
-    u.user_id,
-    u.first_name,
-    u.last_name,
-    u.email,
-    b.booking_id,
-    b.start_date,
-    b.end_date,
-    b.total_price,
-    b.status
-FROM 
-    User u
-RIGHT JOIN 
-    Booking b ON u.user_id = b.user_id
-WHERE 
-    u.user_id IS NULL;
+    User.user_id,
+    User.first_name,
+    User.last_name,
+    Booking.booking_id,
+    Booking.property_id,
+    Booking.start_date,
+    Booking.end_date
+FROM Booking
+LEFT JOIN User ON Booking.user_id = User.user_id;
