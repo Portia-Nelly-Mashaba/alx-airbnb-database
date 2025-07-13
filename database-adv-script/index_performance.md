@@ -52,8 +52,6 @@ SELECT * FROM Booking WHERE user_id = 215;
 
 ```sql
 -- After Index
-CREATE INDEX idx_booking_user_id ON Booking(user_id);
-
 EXPLAIN ANALYZE
 SELECT * FROM Booking WHERE user_id = 215;
 ```
@@ -61,5 +59,3 @@ SELECT * FROM Booking WHERE user_id = 215;
 - Access type: Index seek (idx_booking_user_id used)  
 - Rows examined: ~3  
 - Execution time: ~2ms  
-
----
